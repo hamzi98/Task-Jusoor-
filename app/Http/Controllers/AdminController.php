@@ -30,6 +30,14 @@ class AdminController extends Controller
     public function login(Request $request)
     {
    
+   
+        $validate=Validator::make($request->only('username','password'),[
+            'username'=>'bail|required|string|min:3|max:15|alpha',
+            'password'=>'bail|required|min:8|',],);
+            
+            if($validate->fails())
+            return response()->json(['error'=>$validate->errors()]);
+
 
         $credentials = request(['username', 'password']);
 
